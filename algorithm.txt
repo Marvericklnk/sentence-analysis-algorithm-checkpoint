@@ -1,0 +1,37 @@
+ALGORITHM Sentence_Analysis
+VAR
+    character : CHAR
+    characterCount, wordCount, vowelCount : INTEGER
+    insideWord : BOOLEAN
+BEGIN
+    characterCount <- 0
+    wordCount <- 0
+    vowelCount <- 0
+    insideWord <- FALSE
+
+    REPEAT
+        // Read exactly one character, including spaces and the final point.
+        READ(character)
+        characterCount <- characterCount + 1
+
+        // A new word starts after a space or at the start of the sentence.
+        IF character <> ' ' AND character <> '.' THEN
+            IF insideWord = FALSE THEN
+                wordCount <- wordCount + 1
+                insideWord <- TRUE
+            END_IF
+        ELSE
+            insideWord <- FALSE
+        END_IF
+
+        // Count vowels in both lowercase and uppercase.
+        IF character IN ['a', 'e', 'i', 'o', 'u',
+                         'A', 'E', 'I', 'O', 'U'] THEN
+            vowelCount <- vowelCount + 1
+        END_IF
+    UNTIL character = '.'
+
+    WRITE("Number of characters: ", characterCount)
+    WRITE("Number of words: ", wordCount)
+    WRITE("Number of vowels: ", vowelCount)
+END
